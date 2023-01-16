@@ -16,7 +16,7 @@ Verified on:
 2. Execute:
 
         `ansible-playbook git-cfg.yaml --extra-vars "email=name.surename@domain.com" -K`
-        * `-K` - provide *sudo* password for ansible *privilege escalation*
+        * `-K` - provide **sudo** password for ansible **privilege escalation**
 				* `name`, `susrname`, `domain` - is actualy your email address.
 					This provided data will be used to extract and write to **.gitconfig** your, capitalyzed "Name Surename" from Jinja2 template.
 
