@@ -1,52 +1,55 @@
-- name: Config git
-  hosts: localhost
-  gather_facts: yes
-  become: no
-  vars: 
-    gitconfig: "{{ ansible_env.HOME }}/.gitconfig"
-    id_rsa: "{{ ansible_env.HOME }}/.ssh/id_rsa"
+---
+  - name: Config git
+    hosts: localhost
+    gather_facts: yes
+    become: no
+    vars:  
+      gitconfig: "{{ ansible_env.HOME }}/.gitconfig"
+      id_rsa: "{{ ansible_env.HOME }}/.ssh/id_rsa"
 
-  tasks:
-    - name: Install required packages
-      apt:
-        pkg:
-          - git
-          - openssh-client
-        state: present
-        update_cache: yes
-      become: yes
+    tasks:
+      - name: Install required packages
+        apt:
+          pkg:
+            - git
+            - openssh-client
+          state: present
+          update_cache: yes
+        become: yes
 
-    - name: Extract "extracted_name" variable from {{ email }}
-      shell: |
-        echo "{{ email }}" | cut -d "@" -f1 | sed -r 's/\./ /g' | sed -e "s/\b\(.\)/\u\1/g"
-      args:
-        executable: /bin/bash 
-      register: name_content
+      - name: Extract "extracted_name" variable from {{ email }}
+        shell: |
+          echo "{{ email }}" | cut -d "@" -f1 | sed -r 's/\./ /g' | sed -e "s/\b\(.\)/\u\1/g"
+        args:
+          executable: /bin/bash 
+        register: name_content
 
-    - name: Set "extracted_name" as facts
-      set_fact:
-        extracted_name: "{{ name_content.stdout }}"
+      - name: Set "extracted_name" as facts
+        set_fact:
+          extracted_name: "{{ name_content.stdout }}"
 
-    - name: Ensure .gitconfig file is in place (prefer to create a link)
-      template:
-        src: "{{ ansible_env.PWD }}/it-basic-gitconfig.j2"
-        dest: "{{ gitconfig }}"
-        mode: '0644'
+      - name: Ensure .gitconfig file is in place
+        template:
+          src: "{{ ansible_env.PWD }}/it-basic-gitconfig.j2"
+          dest: "{{ gitconfig }}"
+          mode: '0644'
 
-    - name: Create SSH key pair
-      shell: |
-        if [[ ! -f "{{ id_rsa }}" ]] 
-        then
-          echo -e 'y/n' |\ 
-          ssh-keygen -t rsa -N "" -b 4096 -C $(git config user.email) -f "{{ id_rsa }}" -q
-        fi
-      args:
-        executable: /bin/bash 
+      - name: Create SSH key pair
+        shell: |
+          if [[ ! -f "{{ id_rsa }}" ]] 
+          then
+            echo -e 'y/n' |\ 
+            ssh-keygen -t rsa -N "" -b 4096 -C $(git config user.email) -f "{{ id_rsa }}" -q
+          fi
+        args:
+          executable: /bin/bash 
 
-    - name: Read a file content
-      shell: cat "{{ id_rsa }}.pub"
-      register: pub_key_content
+      - name: Read a file content
+        shell: cat "{{ id_rsa }}.pub"
+        register: pub_key_content
 
-    - name: Print the pub key content to a console
-      debug:
-        msg: "{{ pub_key_content.stdout }}"
+      - name: Print the pub key content to a console
+        debug:
+          msg: "{{ pub_key_content.stdout }}"
+
+# ```
