@@ -15,21 +15,27 @@ Verified on:
 1. `cd` into project directory.
 2. Execute:
 
-    `ansible-playbook git-cfg.yaml --extra-vars "email=name.surname@domain.com" -K`
-	* `-K` - provide **sudo** password for ansible **privilege escalation**
-	* `name`, `surname`, `domain` - is actualy your email address.
-		This provided data will be used to extract and write to **.gitconfig** your, capitalyzed "Name Surename" from Jinja2 template.
+    ```bash
+    ansible-playbook git-cfg.yaml --extra-vars "email=name.surname@domain.com" -K
+    ```
+    * `-K` - provide **sudo** password for ansible **privilege escalation**
+    * `name`, `surname`, `domain` - is actualy your email address.
+        This provided data will be used to extract and write to **.gitconfig** your, capitalyzed "Name Surename" from Jinja2 template.
 
 ### Install Ansible
 
 * Update repos list:
 
-        `sudo apt-get update`
+    ```bash
+    sudo apt-get update
+    ```
 
 * Install Ansible:
 
-        `sudo apt-get install ansible -y`
-	* `-y` - assume "yes" as answer to all prompts and run non-interactively
+    ```bash
+    sudo apt-get install ansible -y
+    ```
+    * `-y` - assume "yes" as answer to all prompts and run non-interactively
 
 
 ---
