@@ -16,7 +16,7 @@ Verified on:
 2. Execute:
 
     ```bash
-    ansible-playbook git-cfg.yaml --extra-vars "email=name.surname@domain.com" -K
+    ansible-playbook git-config.yaml --extra-vars "email=name.surname@domain.com" -K
     ```
     * `-K` - provide **sudo** password for ansible **privilege escalation**
     * `name`, `surname`, `domain` - is actualy your email address.
