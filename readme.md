@@ -8,7 +8,7 @@ Verified on:
 
 ### Pre-requirements
 
-[Ansible](#install-ansibles) must be installed.
+[Ansible](#install-ansible) must be installed.
 
 ### Usage
 
@@ -30,3 +30,6 @@ Verified on:
 
         `sudo apt-get install ansible -y`
 	* `-y` - assume "yes" as answer to all prompts and run non-interactively
+
+
+---
