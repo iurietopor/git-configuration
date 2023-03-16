@@ -14,10 +14,11 @@
 	sdiff = !git diff && git submodule foreach 'git diff'
 	spush = push --recurse-submodules=on-demand
 	supdate = submodule update --remote --merge
-	sync = "!sh -c 'remote_rep=$(git remote -v | grep git@github.com | head -n 1 | cut -f1) && \
-									git checkout --quiet --detach HEAD && \
-									git fetch "$remote_rep" main:main develop:develop ; \
-									git checkout --quiet -'"
+	sync = "!sh -c 'current_br=$(git branch | grep \\* | cut -d \" \" -f 2) && \
+									remote_rep=$(git remote -v | grep amdaris@vs-ssh.visualstudio.com | head -n 1 | cut -f1) && \
+									git checkout main && git pull $remote_rep main && \
+									git checkout develop && git pull $remote_rep develop && \
+									git checkout $current_br'"
 [submodule]
 	recurse = true
 [status]
