@@ -34,6 +34,18 @@
           dest: "{{ gitconfig }}"
           mode: '0644'
 
+      - name: Git Credential Helper
+        shell: |
+          if [[ -z "${WSL_DISTRO_NAME}" ]]; then # Real distro
+            git config --global credential.credentialStore secretservice
+            curl -L https://aka.ms/gcm/linux-install-source.sh | sh
+            git-credential-manager configure
+          else # WSL
+            git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+          fi
+        args:
+          executable: /bin/bash
+
       - name: Create SSH key pair
         shell: |
           if [[ ! -f "{{ id_rsa }}" ]] 

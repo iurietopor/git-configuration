@@ -15,6 +15,12 @@
 	spush = push --recurse-submodules=on-demand
 	supdate = submodule update --remote --merge
 	llast = log -1 --pretty=%B
+	cne = commit -a --amend --no-edit
+	amfp = "!f() { \
+		gr=${1:-$(git remote | head -n 1)}; \
+		gb=$(git rev-parse --abbrev-ref HEAD); \
+		git cne && git push -f \"${gr}\" \"${gb}\"; \
+	}; f"
 [submodule]
 	recurse = true
 [status]
