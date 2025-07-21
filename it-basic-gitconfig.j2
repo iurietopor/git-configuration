@@ -24,7 +24,10 @@
 	tff = "!f() { \
 		terraform fmt -recursive ${1:-..}; \
 	}; f"
+	npmf = !npm run pretty
 [submodule]
 	recurse = true
 [status]
 	submodulesummary = 1
+[credential]
+	useHttpPath = true
